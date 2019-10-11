@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_syd_dynamic_wizard_wizard_config,access_syd_dynamic_wizard_wizard_config,model_syd_dynamic_wizard_wizard_config,,1,0,0,0
+access_syd_dynamic_wizard_wizard_config_line,access_syd_dynamic_wizard_wizard_config_line,model_syd_dynamic_wizard_wizard_config_line,,1,0,0,0

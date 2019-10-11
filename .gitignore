@@ -1,0 +1,37 @@
+status
+users.txt
+/odoo-bin.py
+/.settings/
+/odoo.conf
+
+### Ignore generic temp file, undo files, etc...
+*~
+.~lock.*
+*.autosave
+*.swp
+*.swo
+*.log
+*.orig
+
+### Eclipse specific
+.settings/
+.properties
+.classpath
+bin/
+build/
+
+### VSCode specific
+.vscode/
+odoo.cfg
+
+
+### Pyton specific
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+[.]venv/
+odoo.conf
+.project
+.pydevproject
+*.pyc

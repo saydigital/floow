@@ -1,0 +1,1032 @@
+<odoo>
+  <data>
+    
+    
+    <record model="ir.ui.view" id="task_executed_tree_view">
+      <field name="name">syd_bpm.task_executed.tree</field>
+      <field name="model">syd_bpm.task_executed</field>
+      <field name="priority" eval="15"/>
+      <field name="arch" type="xml">
+          <tree string="Task executed">
+	            <field name="name"/>
+	            <field name="user_id"/>
+	            <field name="is_task_active"/>
+	            <field name="automated"/>
+	            <field name="date_task_start"/>
+	            <field name="date_task_end"/>
+	            <field name="task_duration" widget="float_time"/>
+          </tree>
+      </field>
+    </record>
+	
+	<record model="ir.ui.view" id="task_executed_form_view">
+      <field name="name">syd_bpm.task_executed.form</field>
+      <field name="model">syd_bpm.task_executed</field>
+      <field name="priority" eval="15"/>
+      <field name="arch" type="xml">
+          <form string="Task executed">
+          <sheet>
+          <group>
+	            <field name="name"/>
+	            <field name="user_id"/>
+	            <field name="is_task_active" />
+	            <field name="automated"/>
+	            <field name="date_task_start"/>
+	            <field name="date_task_end" />
+	            <field name="task_duration" widget="float_time"/>
+	            <field name="case_id"/>
+	            <field name="note_id"/>
+	            <field name="process_id" />
+	            <field name="sub_case_id"/>
+	            <field name="activity_id"/>
+	            <field name="process_group_id" />
+	            
+          </group>
+          
+          </sheet>
+          
+          </form>
+      </field>
+    </record>
+    
+    
+    
+  	<record model="ir.ui.view" id="process_group_form_view">
+      <field name="name">syd_bpm.process_group.form</field>
+      <field name="model">syd_bpm.process_group</field>
+      <field name="arch" type="xml">
+          <form string="Process Group">
+	          <sheet>
+	          
+	          	 	<div class="oe_button_box" name="button_box">
+                        
+                 		
+                       
+                       
+                    </div>
+		          <group>
+		          	
+		            <field name="name"/>
+		            <field name="description"/>
+		            <field name="type"/>
+		            <field name="process_ids" readonly="1">
+		            	<tree editable="bottom">
+		            	<field name="name" />
+						<field name="activity_ids_count" />		            	
+		            	<field name="case_ids_count" />
+		            	<field name="startable"/>
+	            		<field name="locked"/>
+		            	</tree>
+		            </field>
+		            
+		          </group>
+		          <notebook name="parameters">
+		          </notebook>
+		         
+		      </sheet>
+		      <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+          </form>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="process_group_tree_view">
+      <field name="name">syd_bpm.process_group.tree</field>
+      <field name="model">syd_bpm.process_group</field>
+      <field name="arch" type="xml">
+          <tree string="Process Groups">
+	            <field name="name"/>
+	            <field name="type"/>
+          </tree>
+      </field>
+    </record>
+	
+    <record model="ir.actions.act_window" id="process_group_act">
+        <field name="name">Process Group</field>
+        <field name="res_model">syd_bpm.process_group</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+  	
+  	
+    <record model="ir.ui.view" id="process_form_view">
+      <field name="name">syd_bpm.process.form</field>
+      <field name="model">syd_bpm.process</field>
+      <field name="arch" type="xml">
+          <form string="Process">
+	          <sheet>
+
+		          <group>
+		            <field name="name"/>
+		            <field name="category_id"/>
+		            <field name="date_deadline"/>
+		            <field name="attachment_ids" widget="many2many_tags" domain="[('process_id','=',active_id)]"/>
+		            <field name="priority_id" />
+		            <field name="startable" />
+		            
+		          </group>
+		          
+		         <notebook>
+		         	
+		          	<page string="Cases">
+		          	<field name="case_ids"/>
+		          	</page>
+		          	<page string="Activity" >
+		          		 <field name="activity_ids"/>
+		          	</page>
+		          	<page string="Process Objects" >
+		          		 <field name="process_object_ids" />
+		          	</page>
+		          
+		          	<page string="Map">
+		          		<field name="map"/>
+		          	</page>
+		          	<page string="Dynamic form">
+		          		<field name="dynamic_form_ids"/>
+		          	</page>
+		          	<page string="Process Roles">
+		          		<field name="process_role_ids"/>
+		          	</page>
+		          </notebook>
+		      </sheet>
+		      <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+          </form>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="process_tree_view">
+      <field name="name">syd_bpm.process.tree</field>
+      <field name="model">syd_bpm.process</field>
+      <field name="arch" type="xml">
+          <tree string="Process">
+	            <field name="name"/>
+	            <field name="case_ids_count" groups="syd_bpm.group_bpm_manager"/>
+	            <field name="locked" groups="syd_bpm.group_bpm_manager"/>
+	            <field name="startable" groups="syd_bpm.group_bpm_manager"/>
+	            <field name="deprecated" groups="syd_bpm.group_bpm_manager" />
+          </tree>
+      </field>
+    </record>
+	    <!-- New Process Kanban View -->
+    <record model="ir.ui.view" id="process_kanban_view">
+      <field name="name">syd_bpm.process.kanban</field>
+      <field name="model">syd_bpm.process</field>
+      <field name="arch" type="xml">
+        <kanban default_group_by="category_id" class="o_kanban_small_column " group_create="false" >
+         
+          <field name="name"/>
+          <field name="category_id"/>
+          <field name="css_background_color"/>
+          <field name="css_text_color"/>
+          
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-style="background-color:#{(record.css_background_color.raw_value)};color:#{(record.css_text_color.raw_value)}" t-attf-class="oe_kanban_global_click oe_semantic_html_override oe_kanban_card">
+                <!-- kanban note -->
+                <span>
+                  <!-- title -->
+                  <field name="name"/>
+                </span>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="process_act">
+        <field name="name">Process</field>
+        <field name="res_model">syd_bpm.process</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+	
+	<record model="ir.ui.view" id="process_category_tree_view">
+      <field name="name">syd_bpm.process_category.tree</field>
+      <field name="model">syd_bpm.process_category</field>
+      <field name="arch" type="xml">
+          <tree string="Process Categories">
+	            <field name="name"/>
+	           
+          </tree>
+      </field>
+    </record>
+	
+	<record model="ir.ui.view" id="process_category_form_view">
+      <field name="name">syd_bpm.process_category.form</field>
+     <field name="model">syd_bpm.process_category</field>
+      <field name="arch" type="xml">
+          <form string="Process Variables">
+          <sheet>
+          <group>
+	            <field name="name"/>
+	            <field name="description"/>
+	            
+          </group>
+          <field name="process_ids"/>
+          </sheet>
+           <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+          </form>
+      </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="process_category_act">
+        <field name="name">Process Categories</field>
+        <field name="res_model">syd_bpm.process_category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+	
+	
+	
+	
+	<record model="ir.ui.view" id="activity_kanban_view">
+      <field name="name">syd_bpm.activity.kanban</field>
+      <field name="model">syd_bpm.activity</field>
+      <field name="arch" type="xml">
+        <kanban class="o_kanban_small_column" group_create="false" >
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click oe_semantic_html_override oe_kanban_card">
+                <span>
+                  <field name="name"/>
+                </span>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+	
+	
+	
+	<record model="ir.ui.view" id="activity_tree_view">
+      <field name="name">syd_bpm.activity.tree</field>
+      <field name="model">syd_bpm.activity</field>
+      <field name="arch" type="xml">
+          <tree string="Activity">
+          		<field name="sequence" widget="handle"/>
+	            <field name="name"/>
+	            <field name="process_id"/>
+	            <field name="type"/>
+	            <field name="deprecated"/>
+	            <field name="user_id"/>
+          </tree>
+      </field>
+    </record>
+	
+	<record model="ir.ui.view" id="activity_form_view">
+      <field name="name">syd_bpm.activity.form</field>
+      <field name="model">syd_bpm.activity</field>
+      <field name="arch" type="xml">
+          <form string="Activity">
+          <sheet>
+          	<group>
+	            <field name="name"/>
+	            <field name="description"/>
+	            <field name="process_id"/>
+	            <field name="type"/>
+	            <field name="date_deadline"/>
+	            <field name="attachment_ids" widget="many2many_tags"/>
+	            <field name="is_start_activity"/>
+	          </group>
+	       <notebook>
+	       	<page string="Specific User" attrs="{'invisible':[('type','!=','user-fixed')]}">
+	       		 <group>
+		          	<field name="user_id"/>
+	          </group>
+	       	
+	       	</page>
+	       	<page string="Dynamic User" attrs="{'invisible':[('type','!=','dynamic-user')]}">
+	       		 <group>
+		          	<field name="dynamic_user_id"/>
+	          </group>
+	       	
+	       	</page>
+	       	<page string="Process Role" attrs="{'invisible':[('type','!=','process-role')]}">
+	       		<group>
+	       			<field name="process_role_activity_id" context="{'default_activity_id':active_id}">
+	       				<form >
+	       					<group>
+	       					<field name="activity_id" invisible="1" />
+	       					<field name="process_role_id" />
+	       					<field name="type" />
+	       					<field name="name" invisible="1" />
+	       					</group>
+	       				</form>
+	       			
+	       			</field>
+	       		</group>
+	       	</page>
+	       	<page string="Automated" attrs="{'invisible':[('type','!=','automated')]}">
+	       		<group>
+	       			<field name="action"/>
+	       		</group>
+	       	</page>
+	       	<page string="Sub Process" attrs="{'invisible':[('type','!=','sub-process')]}">
+	       		<group>
+	       			<field name="sub_process_id"/>
+	       		</group>
+	       	</page>
+	       	<page string="Dynamic Form">
+	       		<group>
+	       			<field name="dynamic_form_id" />
+	       		</group>
+	       	</page>
+	       </notebook>
+	         
+	          </sheet>
+          </form>
+          
+      </field>
+    </record>
+    
+    <record id="view_activity_filter" model="ir.ui.view">
+			<field name="name">activiy.select</field>
+			<field name="model">syd_bpm.activity</field>
+			<field name="arch" type="xml">
+				<search string="Search Document">
+					<field name="name" string="Name" />
+					<field name="process_id" string="Process name" />
+					<group expand="0" string="Group By">
+                        <filter string="Process" name="group_by_process_id" domain="[]" context="{'group_by':'process_id'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+    
+    <record model="ir.actions.act_window" id="activity_act">
+        <field name="name">Activity</field>
+        <field name="res_model">syd_bpm.activity</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_activity_filter" />
+		<field name="context">{'search_default_group_by_process_id':1}</field>
+    </record>
+    
+    
+	
+	
+	 <!-- New note Kanban View -->
+    <record id="view_note_note_kanban_inherit" model="ir.ui.view">
+      <field name="name">note.note.kanban</field>
+      <field name="model">note.note</field>
+      <field name="inherit_id" ref="note.view_note_note_kanban"/>
+      
+     <field name="arch" type="xml">
+	   <xpath  expr="/kanban[1]" position="replace">
+        
+        <kanban default_group_by="stage_id" group_create="false"  class="oe_notes oe_kanban_quickcreate_textarea o_kanban_small_column">
+          <field name="color"/>
+          <field name="sequence"/>
+          <field name="name"/>
+          <field name="stage_id"/>
+          <field name="open"/>
+          <field name="process_id"/>
+          <field name="memo"/>
+          <field name="date_done"/>
+          <field name="message_partner_ids"/>
+          <field name="tag_ids"/>
+          <field name="css_background_color"/>
+          <field name="css_text_color"/>
+          <field name="process_id"/>
+          <field name="date_deadline"/>
+          <templates>
+            <t t-name="kanban-box">
+				<div  t-if="!record.process_id.raw_value" t-attf-class=" oe_kanban_global_click oe_semantic_html_override oe_kanban_card">
+
+                <field name="tag_ids"/>
+				
+                <div class="o_dropdown_kanban dropdown">
+                
+                    <a class="dropdown-toggle btn" role="button" aria-label="Dropdown" data-toggle="dropdown" href="#" >
+                        <span class="fa fa-bars fa-lg" role="img" aria-label="Dropdown" title="Dropdown menu"/>
+                    </a>
+                    
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        <li><a type="delete">Delete</a></li>
+                        <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+                    </ul>
+                    
+                </div>
+                
+                  <span>
+                    <a name="action_close" type="object" t-if="record.open.raw_value">
+                    	<i class="fa fa-check" role="img" aria-label="Opened" title="Opened"/>
+                    </a>
+                    <a name="action_open" type="object" t-if="!record.open.raw_value">
+                    	<i class="fa fa-undo" role="img" aria-label="Closed" title="Closed"/>
+                    </a>
+                  </span>
+                  
+<!--                 kanban note -->
+                <span t-attf-class="oe_kanban_content #{record.open.raw_value ? '' : 'note_text_line_through'}">
+<!--                   title -->
+                  <field name="name"/>
+                </span>
+                
+                <t t-if="record.message_partner_ids.raw_value.length &gt; 1">
+                    <div class="clearfix"></div>
+                      <t t-foreach="record.message_partner_ids.raw_value" t-as="follower">
+                        <img t-att-src="kanban_image('res.partner', 'image_small', follower)" width="24" height="24" class="oe_kanban_avatar pull-right" t-att-data-member_id="follower" alt="Follower"/>
+                      </t>
+                    <div class="clearfix"></div>
+                </t>
+                
+              </div>
+              
+              
+              <div  t-if="record.process_id.raw_value" t-attf-style="background-color:#{(record.css_background_color.raw_value)};color:#{(record.css_text_color.raw_value)}" t-attf-class=" oe_kanban_global_click oe_semantic_html_override oe_kanban_card">
+
+                <field name="tag_ids"/>
+                
+				<strong ><field name="date_deadline"/></strong>
+				
+				<br t-if="record.date_deadline.raw_value" />
+				
+                  <span>
+                    <a name="action_close" type="object" t-if="record.open.raw_value">
+                    	<i class="fa fa-check" role="img" aria-label="Opened" title="Opened"/>
+                    </a>
+                    <a name="action_open" type="object" t-if="!record.open.raw_value">
+                    	<i class="fa fa-undo" role="img" aria-label="Closed" title="Closed"/>
+                    </a>
+                  </span>
+                  
+<!--                 kanban note -->
+                <span t-attf-class="oe_kanban_content #{record.open.raw_value ? '' : 'note_text_line_through'}">
+<!--                   title -->
+                  <field name="name"/>
+                </span>
+                
+                <t t-if="record.message_partner_ids.raw_value.length &gt; 1">
+                    <div class="clearfix"></div>
+                      <t t-foreach="record.message_partner_ids.raw_value" t-as="follower">
+                        <img t-att-src="kanban_image('res.partner', 'image_small', follower)" width="24" height="24" class="oe_kanban_avatar pull-right" t-att-data-member_id="follower" alt="Follower"/>
+                      </t>
+                    <div class="clearfix"></div>
+                </t>
+                
+              </div>
+            </t>
+          </templates>
+        </kanban>
+        </xpath>
+      </field>
+    </record>
+	
+	<record model="ir.ui.view" id="view_note_bpm">
+	   <field name="name">note.note.form</field>
+       <field name="model">note.note</field>
+	   <field name="inherit_id" ref="syd_note.view_note_archive"/>
+	   <field name="arch" type="xml">
+				<xpath  expr="//button[@name='toggle_active']" 
+                    position="replace">
+                    	<field name="open" invisible="1" />
+                        <button name="action_close" string="Close" attrs="{'invisible':['|',('process_id','=',False),('open','=',False)]}" type="object"  groups="base.group_user" class="oe_stat_button" icon="fa-check">
+                            
+                        </button>
+                        <button name="action_open" string="Undo Close" attrs="{'invisible':['|',('process_id','=',False),('open','=',True)]}" type="object"  groups="base.group_user" class="oe_stat_button" icon="fa-undo">
+                            
+                        </button>
+                        <button name="next_process_step" confirm="This action cannot be reverted. Are you sure?" attrs="{'invisible':['|','|',('process_id','=',False),('open','=',True),('active','=',False)]}" type="object" string="Next Process Task" groups="base.group_user" class="oe_stat_button" icon="fa-check">                           
+                        </button>
+                        <button name="toggle_active" type="object" attrs="{'invisible':[('process_id','!=',False)]}" confirm="The note will not be visible. Are you sure to Archive this Note? " groups="base.group_user" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                        </button>
+                        
+                </xpath>
+                <xpath  expr="//notebook[@name='noteNB']" 
+                    position="inside">
+                   <page string="Process">
+	                    <group>
+	                    	<field name="date_deadline" readonly="1"/>
+	                    	<field name="process_id" readonly="1" />
+	                    	<field name="process_description" readonly="1" />
+	                    	
+	                    </group>
+                    </page>
+                    <page string="Documents">
+                    	<group>
+                    		<field name="attachment_ids" widget="many2many_binary" readonly="1"/>
+                    	</group>
+                    </page>
+                </xpath>
+	   </field>
+   </record>
+   
+
+   
+    <record model="ir.ui.view" id="process_todo_search_view">
+     <field name="name">syd_bpm.process.search</field>
+      <field name="model">syd_bpm.process</field>
+      <field name="arch" type="xml">
+				<search string="Search">
+                    <field name="name" />
+                    <filter string="Startable" domain="[('startable','=',True)]"  name="startable" />
+                </search>
+                </field>
+       </record>
+       
+   	<record model="ir.actions.act_window" id="process_todo_act">
+        <field name="name">Process</field>
+        <field name="res_model">syd_bpm.process</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="process_todo_search_view"/>
+        <field name="context">{"search_default_startable":1}</field>
+    </record>
+    
+    <record model="ir.ui.view" id="case_tree_view">
+      <field name="name">syd_bpm.case.tree</field>
+      <field name="model">syd_bpm.case</field>
+      <field name="arch" type="xml">
+          <tree string="Case">
+	            <field name="name"/>
+	            <field name="date_task_start"/>
+	            <field name="date_task_end"/>
+	            <field name="task_active"/>
+	            <field name="case_duration" widget="float_time"/>
+          </tree>
+      </field>
+    </record>
+    
+    
+    <record model="ir.ui.view" id="case_form_view">
+      <field name="name">syd_bpm.case.form</field>
+      <field name="model">syd_bpm.case</field>
+      <field name="arch" type="xml">
+          <form string="Case">
+          <header>
+				<field name="state" widget="statusbar"  />
+				<button name="cancel_case" class="oe_highlight" type="object" string="Cancel Case" attrs="{'invisible':[('state','!=','in_progress')]}" confirm="This action cannot be reverted. Are you sure?"></button>
+		   </header>
+		  <sheet>
+			
+			<group>
+			<field name="name" />
+			
+			
+			</group>
+			<field name="task_executed_ids"/>
+		   </sheet>
+          </form>
+      </field>
+    </record>
+    
+     <record id="view_case_filter" model="ir.ui.view">
+			<field name="name">case.select</field>
+			<field name="model">syd_bpm.case</field>
+			<field name="arch" type="xml">
+				<search string="Search Document">
+					<field name="name" string="Name" />
+					<field name="state" string="State" />
+					<group expand="0" string="Group By">
+						<filter string="Process" name="group_by_process_id" domain="[]" context="{'group_by':'process_id'}"/>
+					</group>
+				</search>
+			</field>
+		</record>
+    
+    
+    <record model="ir.actions.act_window" id="case_todo_act_I">
+        <field name="name">Case</field>
+        <field name="res_model">syd_bpm.case</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="view_case_filter" />
+			<field name="context">{'search_default_state':'in_progress','search_default_group_by_process_id':1'}</field>
+    </record>
+    
+    
+    <record model="ir.ui.view" id="dynamic_form_kanban_view">
+      <field name="name">syd_bpm.dynamic_form.kanban</field>
+      <field name="model">syd_bpm.dynamic_form</field>
+      <field name="arch" type="xml">
+        <kanban group_create="false" >
+         
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click oe_semantic_html_override oe_kanban_card">
+                <span>
+                  <field name="name"/>
+                </span>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+    
+    
+    
+    
+    	<record model="ir.ui.view" id="dynamic_form_tree">
+			<field name="name">dynamic_form_tree</field>
+			<field name="model">syd_bpm.dynamic_form</field>
+			<field name="priority" eval="16" />
+			<field name="arch" type="xml">
+				<tree string="Dynamic Form">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="dynamic_form_form" model="ir.ui.view">
+			<field name="name">dynamic_form_form</field>
+			<field name="model">syd_bpm.dynamic_form</field>
+			<field name="arch" type="xml">
+				<form string="Dynamic form">
+					<header>
+		          		<field name="state" widget="statusbar"  />
+		          		<button name="set_done" class="oe_stat_button oe_highlight" type="object" string="Set Done" attrs="{'invisible':[('state','=','done')]}" ></button>
+				    </header>
+					<sheet>
+						
+						<group>
+							<field name="process_id" />
+							<field name="name" />
+							<field name="note" />
+							<field name="dynamic_wizard_id" groups="base.group_system" readonly="1"/>
+						</group>
+						<notebook>
+							<page string="Fields">
+								<field name="dynamic_form_line_ids" context="{'default_process_id':process_id}">
+									<tree string="Fields" editable="bottom">
+										<field name="sequence" widget="handle"/>
+										<field name="process_id" invisible="1" />
+										<field name="process_object_id" domain="[('process_id','=',process_id)]"/>
+										<field name="string_field"/>
+										<field name="required" />
+										<field name="dynamic_form_id" invisible="1" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+	<record id="view_dynamic_form_filter" model="ir.ui.view">
+			<field name="name">dynamic_form.select</field>
+			<field name="model">syd_bpm.dynamic_form</field>
+			<field name="arch" type="xml">
+				<search string="Search Document">
+					<field name="name" string="Name" />
+					<field name="process_id" string="Process name" />
+					<group expand="0" string="Group By">
+                        <filter string="Process" name="group_by_process_id" domain="[]" context="{'group_by':'process_id'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+    		
+
+		<record model="ir.actions.act_window"
+			id="dyanmic_form_action">
+			<field name="name">Dynamic form</field>
+			<field name="res_model">syd_bpm.dynamic_form</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form</field>
+			<field name="search_view_id" ref="view_dynamic_form_filter" />
+			<field name="context">{'search_default_group_by_process_id':1}</field>
+		</record>
+    
+    
+     <record model="ir.ui.view" id="process_date_calculated_tree_view">
+      <field name="name">syd_bpm.process_date_calculated.tree</field>
+      <field name="model">syd_bpm.process_date_calculated</field>
+      <field name="arch" type="xml">
+          <tree string="Process Date Calculated">
+	            <field name="name"/>
+	            <field name="option"/>
+	            <field name="days" />
+          </tree>
+      </field>
+    </record>
+	
+	<record model="ir.ui.view" id="process_date_calculated_form_view">
+      <field name="name">syd_bpm.process_date_calculated.form</field>
+      <field name="model">syd_bpm.process_date_calculated</field>
+      <field name="arch" type="xml">
+          <form string="Process Date Calculated">
+          <sheet>
+          <group>
+	            <field name="name"/>
+	            <field name="option"/>
+	            <field name="days" />
+	            
+          </group>
+          
+          </sheet>
+          
+          </form>
+      </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="process_date_calculated_act">
+        <field name="name">Process Date Calculated</field>
+        <field name="res_model">syd_bpm.process_date_calculated</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    
+      <record model="ir.ui.view" id="process_priority_tree_view">
+      <field name="name">syd_bpm.process_priority.tree</field>
+      <field name="model">syd_bpm.process_priority</field>
+      <field name="arch" type="xml">
+          <tree string="Process Priority">
+	            <field name="name"/>
+	           
+          </tree>
+      </field>
+    </record>
+	
+	<record model="ir.ui.view" id="process_priority_form_view">
+      <field name="name">syd_bpm.process_priority.form</field>
+      <field name="model">syd_bpm.process_priority</field>
+      <field name="arch" type="xml">
+          <form string="Process Priority">
+          <sheet>
+          <group>
+	            <field name="name"/>
+	            <field name="css_background_color"/>
+         		<field name="css_text_color"/>
+          </group>
+          
+          </sheet>
+          
+          </form>
+      </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="process_priority_act">
+        <field name="name">Process Priority</field>
+        <field name="res_model">syd_bpm.process_priority</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    
+    <record model="ir.ui.view" id="process_object_kanban_view">
+      <field name="name">syd_bpm.process_object.kanban</field>
+      <field name="model">syd_bpm.process_object</field>
+      <field name="arch" type="xml">
+        <kanban group_create="false" >
+         
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click oe_semantic_html_override oe_kanban_card">
+                <span>
+                  <field name="name"/>
+                </span>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+    
+    
+    
+   <record model="ir.ui.view" id="process_object_tree_view">
+      <field name="name">syd_bpm.process_object.tree</field>
+      <field name="model">syd_bpm.process_object</field>
+      <field name="arch" type="xml">
+          <tree string="Process Object">
+	            <field name="name"/>
+	           <field name="process_id"/>
+	           <field name="type"/>
+	           <field name="model_id"/>
+          </tree>
+      </field>
+    </record>
+	
+	<record model="ir.ui.view" id="process_object_form_view">
+      <field name="name">syd_bpm.process_object.form</field>
+      <field name="model">syd_bpm.process_object</field>
+      <field name="arch" type="xml">
+          <form string="Process Object">
+          <sheet>
+          <group>
+	            <field name="name"/>
+	            <field name="process_id"/>
+	            <field name="is_attachment"/>
+         		<field name="type" attrs="{'readonly' : [('is_attachment','=',True)]}"/>
+         		<field name="choices" attrs="{'invisible':[('type','!=','selection')]}"/>
+         		<field name="model_id" attrs="{'invisible':[('type','!=','many2one')],'readonly' : [('is_attachment','=',True)]}"/>
+         		<field name="date_calculated"/>
+         		<field name="attachment_type" attrs="{'invisible':[('is_attachment','=',False)], 'required':[('is_attachment','=',True)]}"/>
+         		<field name="activity_ids" widget="many2many_tags" attrs="{'invisible':[('attachment_type','!=','activity')], 'required':[('attachment_type','=','activity')]}"/>
+         		<field name="default_attachment" attrs="{'invisible':[('is_attachment','=',False)]}"/>
+          </group>
+          
+          </sheet>
+          
+          </form>
+      </field>
+    </record>
+    
+    <record id="view_process_object_filter" model="ir.ui.view">
+			<field name="name">process_object.select</field>
+			<field name="model">syd_bpm.process_object</field>
+			<field name="arch" type="xml">
+				<search string="Search Document">
+					<field name="name" string="Name" />
+					<field name="process_id" string="Process name" />
+					<group expand="0" string="Group By">
+                        <filter string="Process" name="group_by_process_id" domain="[]" context="{'group_by':'process_id'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+    
+    <record model="ir.actions.act_window" id="process_object_act">
+        <field name="name">Process Object</field>
+        <field name="res_model">syd_bpm.process_object</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="search_view_id" ref="view_process_object_filter" />
+		<field name="context">{'search_default_group_by_process_id':1}</field>
+    </record>
+    
+      <record model="ir.ui.view" id="process_role_tree_view">
+      <field name="name">syd_bpm.process_role.tree</field>
+      <field name="model">syd_bpm.process_role</field>
+      <field name="arch" type="xml">
+          <tree string="Process Role">
+	            <field name="name"/>
+          </tree>
+      </field>
+    </record>
+	
+	<record model="ir.ui.view" id="process_role_form_view">
+      <field name="name">syd_bpm.process_role.form</field>
+      <field name="model">syd_bpm.process_role</field>
+      <field name="arch" type="xml">
+          <form string="Process Role">
+          <sheet>
+          <group>
+	            <field name="name"/>
+	            <field name="process_user_ids">
+	            	<tree editable="bottom">
+	            		<field name="sequence" widget="handle" />
+	            		<field name="user_id" />
+	            		
+	            	</tree>
+	            
+	            </field>
+     
+          </group>
+          
+          </sheet>
+          
+          </form>
+      </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="process_role_act">
+        <field name="name">Process Role</field>
+        <field name="res_model">syd_bpm.process_role</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+ 	<record id="process_trigger_form_view" model="ir.ui.view">
+		<field name="name">syd_bpm.process_trigger.form</field>
+		<field name="model">ir.actions.server</field>
+		<field name="inherit_id" ref="base.view_server_action_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//page[@name='code']" position="before">
+				<page groups="syd_bpm.group_bpm_manager" string="BPM Process Actions" attrs="{'invisible':[('state','not in',('process'))]}" >
+					<group>
+						<field name="process_id" attrs="{'required':[('state','in',('process'))]}"/>
+						<field name="user_id" attrs="{'required':[('state','in',('process'))]}"/>
+					</group>
+				</page>
+				<page groups="syd_bpm.group_bpm_manager" string="BPM Activity Actions" attrs="{'invisible':[('state','not in',('activity'))]}" >
+					<group>
+						<field name="process_id" attrs="{'required':[('state','in',('activity'))]}"/>
+						<field name="activity_id"  attrs="{'required':[('state','in',('activity'))]}" domain="[('process_id','=', process_id)]"/>
+					</group>
+				</page>
+				
+			</xpath>
+			<xpath expr="//page[@name='code']" position="attributes">
+				<attribute name="attrs">{'invisible': [('state', 'not in', ('process','activity','code'))]}</attribute>
+			</xpath>
+		</field>
+	</record>
+	
+ 	<record id="tasks_report_graph_view" model="ir.ui.view">
+		<field name="name">syd_bpm.tasks_report.graph</field>
+		<field name="model">syd_bpm.task_executed</field>
+		<field name="arch" type="xml">
+			<graph string="Tasks" stacked="1">
+				<field name="activity_id" type="row"/>
+				<field name="task_duration" type="measure"/>
+			</graph>
+		</field>
+	</record>
+	<record id="tasks_report_pivot_view" model="ir.ui.view">
+         <field name="name">syd_bpm.tasks_report.pivot</field>
+         <field name="model">syd_bpm.task_executed</field>
+         <field name="arch" type="xml">
+             <pivot string="Tasks" disable_linking="True">
+                 <field name="activity_id" type="row"/>
+                 <field name="process_id" type="col"/>
+                 <field name="task_duration" type="measure" widget="float_time"/>
+             </pivot>
+         </field>
+    </record>
+    
+    <record model="ir.ui.view" id="tasks_report_tree_view">
+      <field name="name">syd_bpm.tasks_report.tree</field>
+      <field name="model">syd_bpm.task_executed</field>
+      <field name="priority" eval="16"/>
+      <field name="arch" type="xml">
+          <tree string="Tasks" create="false" delete="false">
+	            <field name="name"/>
+	            <field name="process_id"/>
+	            <field name="case_id"/>
+	            <field name="activity_id"/>
+	            <field name="user_id"/>
+	            <field name="task_duration" widget="float_time"/>
+          </tree>
+      </field>
+    </record>
+
+	<record model="ir.ui.view" id="tasks_report_form_view">
+		<field name="name">syd_bpm.tasks_report.form</field>
+		<field name="model">syd_bpm.task_executed</field>
+		<field name="priority" eval="16"/>
+		<field name="arch" type="xml">
+			<form string="Task" create="false" edit="false" delete="false">
+				<sheet>
+					<group>
+						<field name="name" />
+						<field name="process_id" />
+						<field name="case_id" />
+						<field name="activity_id" />
+						<field name="user_id" />
+						<field name="task_duration" widget="float_time" />
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+        
+	<record id="tasks_report_filter" model="ir.ui.view">
+		<field name="name">syd_bpm.tasks_report.select</field>
+		<field name="model">syd_bpm.task_executed</field>
+		<field name="arch" type="xml">
+			<search string="Search Task">
+				<field name="name" string="Task Name" />
+				<field name="process_id" string="Process Name" />
+				<field name="case_id" string="Process Case Name" />
+				<group expand="0" string="Group By">
+					<filter string="Process" name="group_by_process_id"
+						domain="[]" context="{'group_by':'process_id'}" />
+					<filter string="Activity" name="group_by_activity_id"
+						domain="[]" context="{'group_by':'activity_id'}" />
+				</group>
+				<group expand="0" string="Filters">
+					<filter string="State Completed" name="filter_case_state" domain="[('case_id.state','=','completed')]"/>
+				</group>
+			</search>
+		</field>
+	</record>
+
+    <record model="ir.actions.act_window" id="process_trigger_act">
+        <field name="name">Process Trigger</field>
+        <field name="res_model">base.automation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    	<field name="domain">[('process_id','!=',False),('activity_id','=',False)]</field>
+    	<field name="context" eval="{'default_state':'process'}"/>
+    </record>
+    
+    <record model="ir.actions.act_window" id="activity_trigger_act">
+        <field name="name">Activity Trigger</field>
+        <field name="res_model">base.automation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+    	<field name="domain">[('process_id','!=',False),('activity_id','!=',False)]</field>
+    	<field name="context" eval="{'default_state':'activity'}"/>
+    </record>
+    
+    <record model="ir.actions.act_window" id="tasks_report_act">
+        <field name="name">Tasks Report</field>
+        <field name="res_model">syd_bpm.task_executed</field>
+        <field name="view_mode">graph,tree,form,pivot</field>
+        <field name="view_type">form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+    		(0, 0, {'view_mode': 'tree', 'view_id': ref('tasks_report_tree_view')}),
+    		(0, 0, {'view_mode': 'form', 'view_id': ref('tasks_report_form_view')})]"/>
+    	<field name="domain">[]</field>
+    	<field name="context">{'search_default_group_by_process_id' : 1, 'search_default_group_by_activity_id' : 1, 'search_default_filter_case_state' : 1}</field>
+    </record>
+  </data>
+</odoo>
