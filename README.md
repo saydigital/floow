@@ -26,11 +26,12 @@ You can configure your process activity.
 Each activity can be:
 
 #### Manual Activities
-The Manual activities will create a note to the user that have to be complete. For manual activities you can user
-	* Specific User: The user specified
-	* User of Process Case : The user that you insert in your Launch Process Form
-	* Dynamic User: User inside a Process Object
-	* Process Role: User of a specific role (selected based on a Rule)
+The Manual activities will create a note to the user that have to be complete. For manual activities you can use:
+
+* Specific User: The user specified
+* User of Process Case : The user that you insert in your Launch Process Form
+* Dynamic User: User inside a Process Object
+* Process Role: User of a specific role (selected based on a Rule)
 	
 #### Automated Activities
 Activities of this type will execute an odoo Server Action
