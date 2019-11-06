@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="BpmnWidget_action" model="ir.actions.client">
+        <field name="name">open bpmjs</field>
+        <field name="tag">BpmnWidget</field>
+        <field name="context">{'model': 'syd_bpm.process', 'field':'bpmjs_text','original_action':'syd_bpm.process_act'}</field>
+    </record>
+    
+    <!-- syd_bpm.process inherit form view -->
+    <record id="process_form_view" model="ir.ui.view">
+        <field name="name">syd_bpm.process.inherit.view.form</field>
+        <field name="model">syd_bpm.process</field>
+        <field name="inherit_id" ref="syd_bpm.process_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='startable']" position="after">
+                <button name="%(syd_bpmnjs.BpmnWidget_action)d" string="Open Designer" type="action" />
+                <button name="load_design" string="Load Design" type="object" />
+            </xpath>
+
+        </field>
+    </record>
+
+    
+
+</odoo>
