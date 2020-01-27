@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+    <t t-name="camunda_connector.bpmn_widget_template">
+        <div class="modeler">
+            <div id="canvas"></div>
+            <div id="properties"></div>
+        </div>
+    </t>
+
+</templates>
