@@ -12,7 +12,6 @@ class ProcessDefinition(models.Model):
     client = Camunda(host='172.18.0.4', port='8080')
 
     def _get_processes(self):
-
         porcesses = self.client.processes()
         return [(x.key, x.name) for x in porcesses]
 

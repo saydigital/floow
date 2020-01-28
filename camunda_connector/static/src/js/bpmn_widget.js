@@ -15,6 +15,23 @@ odoo.define('camunda_connector.bpmn_widget', function(require) {
             });
         },
 
+        _onElementSelected : function(event) {
+            var tasksRegex = /bpmn:[A-z]*Task/;
+            var eventsRegex = /bpmn:[A-z]*Event/;
+            if(tasksRegex.test(event.element.type)){
+                console.log(this.elements[event.element.id]);
+                // show tasks properties panel
+            }
+            else if(eventsRegex.test(event.element.type)){
+                // show event properties panel
+
+            }
+            
+            // if (self.mode !== 'readonly') {
+            //     self._on_bjs_container_change();
+            // }
+        },
+
         _render: function() {
             var self = this;
             if(!this.value){
@@ -23,33 +40,16 @@ odoo.define('camunda_connector.bpmn_widget', function(require) {
             var content = { 'xml_value': this.value };
             content.mode = this.mode;
             let html = $(core.qweb.render("camunda_connector.bpmn_widget_template", { widget: content }));
-
-
             this.$el.html(html);
-
-
             this.bpmnViewer = new BpmnJS({
                 container: this.$el[0].querySelector('#canvas'),
             });
 
             this.eventBus = this.bpmnViewer.get('eventBus');
 
-            this.eventBus.on('element.click', function(e) {
-                var tasksRegex = /bpmn:[A-z]*Task/;
-                var eventsRegex = /bpmn:[A-z]*Event/;
+            this.eventBus.on('element.click', this._onElementSelected.bind(this));
 
-                if(tasksRegex.test(e.element.type)){
-                    // show tasks properties panel
-                }
-                else if(eventsRegex.test(e.element.type)){
-                    // show event properties panel
-
-                }
-                
-                // if (self.mode !== 'readonly') {
-                //     self._on_bjs_container_change();
-                // }
-            });
+            this.elements = {};
             this.bpmnViewer.importXML(this.value, function(err) {
 
                 if (err) {
@@ -74,7 +74,12 @@ odoo.define('camunda_connector.bpmn_widget', function(require) {
 
                 document.querySelector('.djs-palette').remove();
                 document.querySelector('.djs-overlay-container').remove();
-                
+                self.bpmnViewer.getDefinitions().rootElements.forEach(rootElement => {
+                    rootElement.flowElements.forEach(element => {
+                        self.elements[element.id] = element;
+                    });
+                });
+                console.log("all elements ", self.elements);
             });
 
 
