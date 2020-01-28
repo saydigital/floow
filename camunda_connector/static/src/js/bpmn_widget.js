@@ -79,7 +79,6 @@ odoo.define('camunda_connector.bpmn_widget', function(require) {
                         self.elements[element.id] = element;
                     });
                 });
-                console.log("all elements ", self.elements);
             });
 
 
