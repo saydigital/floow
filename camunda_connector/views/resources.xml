@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+
+            <link rel="stylesheet" href="/camunda_connector/static/src/js/bpmjs/assets/diagram-js.css"/>
+            <link rel="stylesheet" href="/camunda_connector/static/src/js/bpmjs/assets/bpmn-font/css/bpmn.css"/>
+
+            <script type="text/javascript" src="/camunda_connector/static/src/js/bpmjs/bpmn-modeler.production.min.js"></script>
+            <script type="text/javascript" src="/camunda_connector/static/src/js/bpmjs/bpmn-js-properties-panel-bundle.js"></script>
+
+            <script type="text/javascript" src="/camunda_connector/static/src/js/bpmn_widget.js"></script>
+        </xpath>
+    </template>
+</odoo>

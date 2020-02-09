@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <!-- camunda_connector.process.definition tree view -->
+        <record id="camunda_connector_process_definition_view_tree" model="ir.ui.view">
+            <field name="name">camunda_connector.process.definition.view.tree</field>
+            <field name="model">camunda_connector.process.definition</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- camunda_connector.process.definition form view -->
+        <record id="camunda_connector_process_definition_view_form" model="ir.ui.view">
+            <field name="name">camunda_connector.process.definition.view.form</field>
+            <field name="model">camunda_connector.process.definition</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <!-- <button string="Deploy" name="action_deploy" type="object" class="oe_highlight"/> -->
+                    </header>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <field name="refreence"/>
+                    <field name="desc_xml" widget="bpmn_widget"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- camunda_connector.process.definition action window -->
+        <record id="camunda_connector_process_definition_action" model="ir.actions.act_window">
+            <field name="name">Process Definition</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">camunda_connector.process.definition</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Add business process definition
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

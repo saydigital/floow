@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <!-- This Menu Item will appear in the Upper bar, that's why It needs NO parent or action -->
+        <menuitem id="bpm_menu_root" name="BPM" sequence="1"/>
+
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="bpm_documnets_menu_categ" name="Documents" parent="bpm_menu_root" sequence="1"/>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="bpm_processes_menu_act" name="Processes" parent="bpm_documnets_menu_categ" action="camunda_connector_process_definition_action" sequence="1"/>
+    </data>
+</odoo>
