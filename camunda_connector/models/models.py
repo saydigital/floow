@@ -9,7 +9,7 @@ class ProcessDefinition(models.Model):
     _name = 'camunda_connector.process.definition'
     _description = 'The Definition of the business process'
 
-    client = Camunda(host='172.18.0.4', port='8080')
+    client = Camunda(host='172.18.0.2', port='8080')
 
     def _get_processes(self):
         porcesses = self.client.processes()

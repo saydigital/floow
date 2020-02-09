@@ -15,11 +15,17 @@ odoo.define('camunda_connector.bpmn_widget', function(require) {
             });
         },
 
+        createTaskPanel : function(event) {
+            $('#properties')
+            .draggable()
+            .css({top: event.originalEvent.screenY, left: event.originalEvent.screenX, position:'absolute', background: 'blue', width:'50%', height:'50%'});
+        },
         _onElementSelected : function(event) {
             var tasksRegex = /bpmn:[A-z]*Task/;
             var eventsRegex = /bpmn:[A-z]*Event/;
             if(tasksRegex.test(event.element.type)){
-                console.log(this.elements[event.element.id]);
+                this.createTaskPanel(event);
+                console.log(event.element.id);
                 // show tasks properties panel
             }
             else if(eventsRegex.test(event.element.type)){
@@ -74,6 +80,7 @@ odoo.define('camunda_connector.bpmn_widget', function(require) {
 
                 document.querySelector('.djs-palette').remove();
                 document.querySelector('.djs-overlay-container').remove();
+                console.log(self.bpmnViewer.getDefinitions().rootElements);
                 self.bpmnViewer.getDefinitions().rootElements.forEach(rootElement => {
                     rootElement.flowElements.forEach(element => {
                         self.elements[element.id] = element;
