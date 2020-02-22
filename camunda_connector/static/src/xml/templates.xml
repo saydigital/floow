@@ -5,7 +5,12 @@
     <t t-name="camunda_connector.bpmn_widget_template">
         <div class="modeler">
             <div id="canvas"></div>
-            <div id="properties"></div>
+            <div id="properties">
+                <label for="properties_txt">properties txt</label>
+                <input id="properties_txt" type="text"/>
+                <button id="properties_save">Save</button>
+                <button id="properties_close">Close</button>
+            </div>
         </div>
     </t>
 
