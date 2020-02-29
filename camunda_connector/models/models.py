@@ -27,3 +27,7 @@ class ProcessDefinition(models.Model):
                 {'src_xml': self.client.get_xml(self.refreence), 'properties': {}})
         else:
             self.desc_xml = ''
+
+    @api.model
+    def get_data(self):
+        return self.desc_xml
