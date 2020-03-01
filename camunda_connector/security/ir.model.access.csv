@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_camunda_connector_camunda_connector,camunda_connector.camunda_connector,model_camunda_connector_camunda_connector,,1,0,0,0
+access_camunda_connector_process_instance,camunda_connector.process_instance,model_process_instance,,1,1,1,1
+

@@ -21,7 +21,7 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                 var value = {
                     'src_xml': xml,
                     'properties': self.properties,
-                    'elements': self.elements,
+                    'definitions': self.bpmnViewer.getDefinitions()
                 }
                 return self._setValue(JSON.stringify(value));
             });
@@ -143,13 +143,8 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
             }
             self.xml_value = JSON.parse(this.value).src_xml;
             self.properties = JSON.parse(this.value).properties;
-            self.elements = JSON.parse(this.value).elements
             if (self.properties === undefined){
                 self.properties = {}
-            }
-
-            if (self.elements === undefined){
-                self.elements = {}
             }
             var content = {
                 'xml_value': self.xml_value
@@ -189,11 +184,7 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
 
                 document.querySelector('.djs-palette').remove();
                 document.querySelector('.djs-overlay-container').remove();
-                self.bpmnViewer.getDefinitions().rootElements.forEach(rootElement => {
-                    rootElement.flowElements.forEach(element => {
-                        self.elements[element.id] = element;
-                    });
-                });
+                
                 // save the values
                 self._on_bjs_container_change();
             });

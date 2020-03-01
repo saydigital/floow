@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- process.instance tree view -->
+    <record id="process_instance_view_tree" model="ir.ui.view">
+        <field name="name">process.instance.view.tree</field>
+        <field name="model">process.instance</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="definition_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- process.instance form view -->
+    <record id="process_instance_view_form" model="ir.ui.view">
+        <field name="name">process.instance.view.form</field>
+        <field name="model">process.instance</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="definition_id"/>
+                        <field name="instance_data"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="process_instance_action" model="ir.actions.act_window">
+            <field name="name">Process Instance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">process.instance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Add business process instance from start wizard
+                </p>
+            </field>
+        </record>
+</odoo>

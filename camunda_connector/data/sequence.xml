@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="0">
+        <record id="process_instance_seq" model="ir.sequence">
+            <field name="name">Process instance sequence</field>
+            <field name="code">process.instance</field>
+            <field name="prefix">PI</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+        </record>
+
+    </data>
+</odoo>

@@ -4,9 +4,13 @@
         <menuitem id="bpm_menu_root" name="BPM" sequence="1"/>
 
         <!-- This Menu Item Must have a parent -->
-        <menuitem id="bpm_documnets_menu_categ" name="Documents" parent="bpm_menu_root" sequence="1"/>
+        <menuitem id="bpm_documents_menu_categ" name="Documents" parent="bpm_menu_root" sequence="1"/>
 
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="bpm_processes_menu_act" name="Processes" parent="bpm_documnets_menu_categ" action="camunda_connector_process_definition_action" sequence="1"/>
+        <menuitem id="bpm_processes_menu_act" name="Processes" parent="bpm_documents_menu_categ" action="camunda_connector_process_definition_action" sequence="1"/>
+        <menuitem id="bpm_processes_instances_menu_act" name="Processes Instances" parent="bpm_documents_menu_categ" action="process_instance_action" sequence="2"/>
+        <menuitem id="my_tasks_menu_root" name="My Tasks"/>
+        <menuitem id="my_tasks_documents_menu_categ" name="Documents" parent="my_tasks_menu_root" sequence="1"/>
+        <menuitem id="processe_start_menu_act" name="Start Process" parent="my_tasks_documents_menu_categ" action="camunda_connector_process_start_action" sequence="1"/>
     </data>
 </odoo>
