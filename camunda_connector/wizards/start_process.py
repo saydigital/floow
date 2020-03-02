@@ -9,7 +9,6 @@ class ModuleName(models.TransientModel):
     definition_id = fields.Many2one(
         comodel_name="camunda_connector.process.definition", string="Process Definition"
     )
-    instance_data = fields.Text(string="instance_data")
 
     def get_client(self):
         client = Camunda(host="172.18.0.1", port="8080")
@@ -20,6 +19,6 @@ class ModuleName(models.TransientModel):
             {"definition_id": self.definition_id.id}
         )
         client = self.get_client()
-        new_id.instance_data = client.start_process(
+        new_id.instance_id = client.start_process(
             self.definition_id.refreence, new_id.name
         )

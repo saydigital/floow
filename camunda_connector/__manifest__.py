@@ -10,11 +10,13 @@
     "depends": ["base"],
     # always loaded
     "data": [
+        "security/rules.xml",
         "security/ir.model.access.csv",
         "views/resources.xml",
         "views/porcess_views.xml",
         "wizards/start_process_views.xml",
         "views/process_instance_views.xml",
+        "views/process_task_views.xml",
         "views/menus.xml",
         "data/sequence.xml",
     ],

@@ -33,3 +33,9 @@ class ProcessDefinition(models.Model):
     @api.model
     def get_data(self):
         return self.desc_xml
+
+    def get_properties(self, task_definition_key):
+        self.ensure_one()
+        return (
+            json.loads(self.desc_xml).get("properties", {}).get(task_definition_key, {})
+        )

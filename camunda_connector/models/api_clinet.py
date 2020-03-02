@@ -62,4 +62,11 @@ class Camunda:
             f"process-definition/key/{ProcessDefinitionKey}/start",
             payload=json.dumps({"businessKey": businessKey}),
         )
-        return data.text
+        json_data = json.loads(data.text)
+        return json_data["id"]
+
+    def get_tasks(self, instance_id):
+        _logger.info(f"getting tasks of {instance_id}")
+        data = self.get("task", params={"processInstanceId": instance_id})
+        json_data = json.loads(data.text)
+        return json_data

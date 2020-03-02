@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- process.task tree view -->
+    <record id="process_task_view_tree" model="ir.ui.view">
+        <field name="name">process.task.view.tree</field>
+        <field name="model">process.task</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="assign_to"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- process.task form view -->
+    <record id="process_task_view_form" model="ir.ui.view">
+        <field name="name">process.task.view.form</field>
+        <field name="model">process.task</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="message_text" readonly="1"/>
+                        <field name="assign_to"/>
+                    </group>
+                    <group groups="base.group_erp_manager">
+                        <field name="instance_id"/>
+                        <field name="task_id"/>
+                        <field name="task_definition_key"/>
+                    </group>
+                    <group groups="base.group_erp_manager">
+                        <field name="groups_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- process.task action window -->
+    <record id="process_task_action" model="ir.actions.act_window">
+        <field name="name">Processes Tasks</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">process.task</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                tasks assigned to you or a group you are in
+            </p>
+            <p>
+                <!-- More details about what a user can do with this object will be OK -->
+            </p>
+        </field>
+    </record>
+
+</odoo>

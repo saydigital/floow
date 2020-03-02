@@ -19,11 +19,15 @@
         <field name="model">process.instance</field>
         <field name="arch" type="xml">
             <form string="">
+                <header>
+                    <button string="get_tasks" name="get_tasks" type="object" class="oe_highlight"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="name"/>
                         <field name="definition_id"/>
-                        <field name="instance_data"/>
+                        <field name="instance_id"/>
+                        <field name="tasks_ids"/>
                     </group>
                 </sheet>
             </form>
