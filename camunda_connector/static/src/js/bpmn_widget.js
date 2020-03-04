@@ -21,7 +21,9 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                 var value = {
                     'src_xml': xml,
                     'properties': self.properties,
-                    'definitions': self.bpmnViewer.getDefinitions()
+                    'definitions': self.bpmnViewer.getDefinitions(),
+                    'inputLabels': self.inputLabels,
+                    'formLabels': self.formLabels,
                 }
                 return self._setValue(JSON.stringify(value));
             });
@@ -55,9 +57,7 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                             <div id="tabs-2" role="tabpanel" class="tab-pane fade">
                                 <select id="groups_ids" multiple="multiple"/>
                             </div>
-                            <div id="tabs-3" role="tabpanel" class="tab-pane fade">
-                                <p> asdf</p>
-                            </div>
+                            <div id="tabs-3" role="tabpanel" class="tab-pane fade"></div>
                         </div>`);
             this.dialog = new Dialog(this, {
                 size: 'extra-large',
@@ -67,12 +67,19 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                     classes: 'btn-primary',
                     close: true,
                     click: function () {
+                        var click_self = this;
                         var new_text = this.$content.find('.o_set_txt_input').val();
                         var groups = this.$content.find('#groups_ids').val();
                         self.properties[event.element.id] = {
                             'messageText': new_text,
                             'groups': groups
                         };
+
+                        Object.keys(self.inputLabels[event.element.id]).forEach(function(key) {
+                            var val = click_self.$content.find('#'+key).val();
+                            self.inputLabels[event.element.id][key] = val;
+                        });
+
                         // save the values
                         self._on_bjs_container_change();
                     }
@@ -137,6 +144,37 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                             });
                     });
 
+                    if(!self.inputLabels.hasOwnProperty(event.element.id)){
+                        self.inputLabels[event.element.id] = { };
+                    }
+                    if(!self.formLabels.hasOwnProperty(event.element.id)){
+                        self.formLabels[event.element.id] = { };
+                    }
+                    if(event.element.businessObject.hasOwnProperty('extensionElements')) {
+                        var values = event.element.businessObject.extensionElements.values;
+                        Object.keys(values).forEach(function(key) {
+                            var value = values[key];
+                            if(value.$type === "camunda:inputOutput") {
+                                Object.keys(value.$children).forEach(function(child) {
+                                    var childValue = value.$children[child];
+                                    if(childValue.$type === "camunda:inputParameter") {
+                                        self.inputLabels[event.element.id][childValue.name] = childValue.name in self.inputLabels[event.element.id] && self.inputLabels[event.element.id][childValue.name] || '';
+                                    }
+                                });
+                            }
+                            else if(value.$type === "camunda:formData") {
+                                Object.keys(value.$children).forEach(function(child) {
+                                    self.formLabels[event.element.id][value.$children[child].id] = value.$children[child].label;
+                                });
+                            }
+                        });
+                    }
+                    Object.keys(self.inputLabels[event.element.id]).forEach(function(key) {
+                        console.log(key);
+                        self.dialog.$('#tabs-3').append('<label for="'+key+'">'+key+'</label>')
+                        .append('<input id="'+key+'" name="'+key+'" type="text" value="'+self.inputLabels[event.element.id][key]+'"/>');
+                    });
+
 
 
             });
@@ -165,8 +203,16 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
             }
             self.xml_value = JSON.parse(this.value).src_xml;
             self.properties = JSON.parse(this.value).properties;
+            self.inputLabels = JSON.parse(this.value).inputLabels;
+            self.formLabels = JSON.parse(this.value).formLabels;
             if (self.properties === undefined){
                 self.properties = {}
+            }
+            if (self.inputLabels === undefined){
+                self.inputLabels = {}
+            }
+            if (self.formLabels === undefined){
+                self.formLabels = {}
             }
             var content = {
                 'xml_value': self.xml_value
