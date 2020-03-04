@@ -29,15 +29,36 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
 
         createTaskPanel: function (event) {
             var self = this;
-            var $content = $('<div>')
-                .append($('<input>', {
-                    type: 'text',
-                    class: 'o_set_txt_input'
-                }))
-                .append($('<select>', {
-                    id: 'groups_ids',
-                    multiple: 'multiple'
-                }));
+            var $content = $('<div id="tabs">')
+                .append(`<ul class="nav nav-tabs d-print-none" role="tablist">
+                         <li class="nav-item">
+                             <a href="#tabs-1" class="nav-link active" data-toggle="tab" role="tab" aria-controls="tabs-1">
+                             Task Message
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="#tabs-2" class="nav-link" data-toggle="tab" role="tab" aria-controls="tabs-2">
+                             Task Groups
+                             </a>
+                         </li>
+                         <li class="nav-item">
+                             <a href="#tabs-3" class="nav-link" data-toggle="tab" role="tab" aria-controls="tabs-3">
+                             Task Variables
+                             </a>
+                         </li>
+                     </ul>`)
+                .append(`
+                        <div class="tab-content">
+                            <div id="tabs-1" role="tabpanel" class="tab-pane active">
+                                <input type="html" class="o_set_txt_input" />
+                            </div>
+                            <div id="tabs-2" role="tabpanel" class="tab-pane fade">
+                                <select id="groups_ids" multiple="multiple"/>
+                            </div>
+                            <div id="tabs-3" role="tabpanel" class="tab-pane fade">
+                                <p> asdf</p>
+                            </div>
+                        </div>`);
             this.dialog = new Dialog(this, {
                 size: 'extra-large',
                 title: _t('Set The text'),
@@ -63,6 +84,7 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
             });
 
             this.dialog.opened().then(function () {
+                document.querySelector('.modal-content').style.height = '50%';
                 if(!self.properties.hasOwnProperty(event.element.id)){
                     self.properties[event.element.id] = {
                         'messageText': '',
