@@ -44,23 +44,23 @@ class Camunda:
 
     def processes(self):
         _logger.info("getting processes")
-        data = self.get(
-            "process-definition", params={"active": "true", "latestVersion": "true"}
-        )
+        data = self.get("process-definition", params={"active": "true"})
         json_data = json.loads(data.text)
         return [self.Process(rec) for rec in json_data]
 
-    def get_xml(self, key):
+    def get_xml(self, id):
         _logger.info("getting processe xml")
-        data = self.get(f"process-definition/key/{key}/xml")
+        data = self.get(f"process-definition/{id}/xml")
         json_data = json.loads(data.text)
         return json_data["bpmn20Xml"]
 
-    def start_process(self, ProcessDefinitionKey, businessKey):
+    def start_process(self, ProcessDefinitionId, businessKey, form_start_variables):
         _logger.info("start processe")
         data = self.post(
-            f"process-definition/key/{ProcessDefinitionKey}/start",
-            payload=json.dumps({"businessKey": businessKey}),
+            f"process-definition/{ProcessDefinitionId}/start",
+            payload=json.dumps(
+                {"businessKey": businessKey, "variables": form_start_variables}
+            ),
         )
         json_data = json.loads(data.text)
         return json_data["id"]
@@ -68,5 +68,21 @@ class Camunda:
     def get_tasks(self, instance_id):
         _logger.info(f"getting tasks of {instance_id}")
         data = self.get("task", params={"processInstanceId": instance_id})
+        json_data = json.loads(data.text)
+        return json_data
+
+    def get_variables(self, task_id):
+        _logger.info(f"getting variables of {task_id}")
+        data = self.get(f"task/{task_id}/variables")
+        return json.loads(data.text)
+
+    def get_form_variables(self, task_id):
+        _logger.info(f"getting form-variables of {task_id}")
+        data = self.get(f"task/{task_id}/form-variables")
+        return json.loads(data.text)
+
+    def get_start_form_variables(self, id):
+        _logger.info("getting processe form-variables")
+        data = self.get(f"process-definition/{id}/form-variables")
         json_data = json.loads(data.text)
         return json_data

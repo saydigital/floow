@@ -7,7 +7,7 @@
     "category": "Uncategorized",
     "version": "0.1",
     # any module necessary for this one to work correctly
-    "depends": ["base"],
+    "depends": ["mail"],
     # always loaded
     "data": [
         "security/rules.xml",
@@ -21,8 +21,4 @@
         "data/sequence.xml",
     ],
     "qweb": ["static/src/xml/templates.xml"],
-    # only loaded in demonstration mode
-    # 'demo': [
-    #     'demo/demo.xml',
-    # ],
 }

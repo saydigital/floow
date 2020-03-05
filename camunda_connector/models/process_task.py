@@ -1,9 +1,12 @@
 from odoo import api, fields, models
 from .api_clinet import Camunda
 
+import json
+
 
 class ProcessTask(models.Model):
     _name = "process.task"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Process task"
 
     name = fields.Char(string="Name")
@@ -16,3 +19,60 @@ class ProcessTask(models.Model):
 
     groups_ids = fields.Many2many(comodel_name="res.groups", string="groups")
     message_text = fields.Text(string="Message Text")
+    variables = fields.Text(string="Process Variables")
+    form_variables = fields.Text(string="Task Form Variables")
+
+    def get_client(self):
+        client = Camunda(host="172.18.0.1", port="8080")
+        return client
+
+    def get_variables(self):
+        self.ensure_one()
+        client = self.get_client()
+        variables = client.get_variables(self.task_id)
+        inputLabels = self.instance_id.definition_id.get_inputLabels(
+            self.task_definition_key
+        )
+        new_variables = {}
+        for key, item in variables.items():
+            if key in inputLabels:
+                item["label"] = inputLabels[key]
+                new_variables[key] = item
+
+        self.variables = json.dumps(new_variables)
+
+    def get_form_variables(self):
+        self.ensure_one()
+        client = self.get_client()
+        form_variables = client.get_form_variables(self.task_id)
+
+        formLabels = self.instance_id.definition_id.get_formLabels(
+            self.task_definition_key
+        )
+        formTypes = self.instance_id.definition_id.get_formTypes(
+            self.task_definition_key
+        )
+
+        new_form_variables = {}
+        for key, item in form_variables.items():
+            if key in formLabels:
+                item["label"] = formLabels[key]
+                if formTypes[key] == 'string':
+                    item["type"] = 'String'
+                if formTypes[key] == 'long':
+                    item["type"] = 'Integer'
+                new_form_variables[key] = item
+
+        self.form_variables = json.dumps(new_form_variables)
+
+    def create_activity(self):
+        self.ensure_one()
+        self.env["mail.activity"].create(
+            {
+                "res_id": self.id,
+                "res_model_id": self.env["ir.model"]._get("process.task").id,
+                "activity_type_id": self.env.ref("mail.mail_activity_data_todo").id,
+                "summary": self.message_text,
+                "user_id": 6,
+            }
+        )

@@ -13,6 +13,7 @@
 
             <link rel="stylesheet" href="/camunda_connector/static/src/css/jquery.multiselect.css"/>
             <script type="text/javascript" src="/camunda_connector/static/src/js/jquery.multiselect.js"></script>
+            <script type="text/javascript" src="/camunda_connector/static/src/js/variables_widget.js"></script>
 
 
         </xpath>

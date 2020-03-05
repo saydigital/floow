@@ -51,7 +51,7 @@ class ProcessInstance(models.Model):
                 if not any(
                     self.env["process.task"].sudo().search([("name", "=", task["id"])])
                 ):
-                    self.env["process.task"].create(
+                    new_task = self.env["process.task"].create(
                         {
                             "name": task["name"],
                             "task_id": task["id"],
@@ -63,3 +63,6 @@ class ProcessInstance(models.Model):
                             ),
                         }
                     )
+                    new_task.get_variables()
+                    new_task.get_form_variables()
+                    new_task.create_activity()

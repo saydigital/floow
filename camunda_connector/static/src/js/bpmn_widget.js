@@ -9,6 +9,16 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
 
     var BpmnWidget = AbstractField.extend({
 
+        events: {
+            'change .start_vars_input': '_on_start_vars_input_change',
+        },
+
+        _on_start_vars_input_change: function (ev) {
+            var $effected = $(ev.currentTarget);
+            this.start_form_variables[$effected.attr("name")].label = $effected.val()
+            this._on_bjs_container_change();
+        },
+
 
         _on_bjs_container_change: function () {
             var self = this;
@@ -20,10 +30,12 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                 }
                 var value = {
                     'src_xml': xml,
+                    'start_form_variables':self.start_form_variables,
                     'properties': self.properties,
                     'definitions': self.bpmnViewer.getDefinitions(),
                     'inputLabels': self.inputLabels,
                     'formLabels': self.formLabels,
+                    'formTypes': self.formTypes,
                 }
                 return self._setValue(JSON.stringify(value));
             });
@@ -48,17 +60,23 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                              Task Variables
                              </a>
                          </li>
-                     </ul>`)
-                .append(`
-                        <div class="tab-content">
-                            <div id="tabs-1" role="tabpanel" class="tab-pane active">
-                                <input type="html" class="o_set_txt_input" />
-                            </div>
-                            <div id="tabs-2" role="tabpanel" class="tab-pane fade">
+                     </ul>`);
+            var $tabContent = $('<div class="tab-content">');
+            var $tab1 = $('<div id="tabs-1" role="tabpanel" class="tab-pane active">');
+            $tab1.append(`<label for="o_set_txt_input">Message</label>
+                          <input type="html" class="o_set_txt_input" name="o_set_txt_input" />`);
+            
+            var $tab2 = $(`<div id="tabs-2" role="tabpanel" class="tab-pane fade">
                                 <select id="groups_ids" multiple="multiple"/>
-                            </div>
-                            <div id="tabs-3" role="tabpanel" class="tab-pane fade"></div>
-                        </div>`);
+                          </div>`);
+
+            var $tab3 = $('<div id="tabs-3" role="tabpanel" class="tab-pane fade"></div>');
+
+            $tabContent.append($tab1)
+                       .append($tab2)
+                       .append($tab3);
+            $content.append($tabContent);
+                
             this.dialog = new Dialog(this, {
                 size: 'extra-large',
                 title: _t('Set The text'),
@@ -150,6 +168,9 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                     if(!self.formLabels.hasOwnProperty(event.element.id)){
                         self.formLabels[event.element.id] = { };
                     }
+                    if(!self.formTypes.hasOwnProperty(event.element.id)){
+                        self.formTypes[event.element.id] = { };
+                    }
                     if(event.element.businessObject.hasOwnProperty('extensionElements')) {
                         var values = event.element.businessObject.extensionElements.values;
                         Object.keys(values).forEach(function(key) {
@@ -165,12 +186,12 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                             else if(value.$type === "camunda:formData") {
                                 Object.keys(value.$children).forEach(function(child) {
                                     self.formLabels[event.element.id][value.$children[child].id] = value.$children[child].label;
+                                    self.formTypes[event.element.id][value.$children[child].id] = value.$children[child].type;
                                 });
                             }
                         });
                     }
                     Object.keys(self.inputLabels[event.element.id]).forEach(function(key) {
-                        console.log(key);
                         self.dialog.$('#tabs-3').append('<label for="'+key+'">'+key+'</label>')
                         .append('<input id="'+key+'" name="'+key+'" type="text" value="'+self.inputLabels[event.element.id][key]+'"/>');
                     });
@@ -187,10 +208,10 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
             }
             var tasksRegex = /bpmn:[A-z]*Task/;
             var eventsRegex = /bpmn:[A-z]*Event/;
-            if (tasksRegex.test(event.element.type)) {
+            if (event.element.type === "bpmn:UserTask") {
                 this.createTaskPanel(event);
                 // show tasks properties panel
-            } else if (eventsRegex.test(event.element.type)) {
+            } else if (event.element.type === "bpmn:StartEvent") {
                 // show event properties panel
 
             }
@@ -202,9 +223,12 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
                 return;
             }
             self.xml_value = JSON.parse(this.value).src_xml;
+            self.start_form_variables = JSON.parse(this.value).start_form_variables;
             self.properties = JSON.parse(this.value).properties;
             self.inputLabels = JSON.parse(this.value).inputLabels;
             self.formLabels = JSON.parse(this.value).formLabels;
+            self.formTypes = JSON.parse(this.value).formTypes;
+
             if (self.properties === undefined){
                 self.properties = {}
             }
@@ -214,12 +238,16 @@ odoo.define('camunda_connector.bpmn_widget', function (require) {
             if (self.formLabels === undefined){
                 self.formLabels = {}
             }
+            if (self.formTypes === undefined){
+                self.formTypes = {}
+            }
+            
             var content = {
-                'xml_value': self.xml_value
+                'start_vars': self.start_form_variables,
+                'mode':this.mode
             };
 
-            content.mode = this.mode;
-            let html = $(core.qweb.render("camunda_connector.bpmn_widget_template", {}));
+            let html = $(core.qweb.render("camunda_connector.bpmn_widget_template", {widget:content}));
             this.$el.html(html);
             this.bpmnViewer = new BpmnJS({
                 container: this.$el[0].querySelector('#canvas'),
