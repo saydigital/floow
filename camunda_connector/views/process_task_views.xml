@@ -20,7 +20,8 @@
         <field name="arch" type="xml">
             <form string="">
                 <header>
-                    <button string="Complete" name="complete" type="object" class="oe_highlight"/>
+                    <button string="Complete" name="complete" states="draft" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <group>
                     <field name="name" readonly="1"/>

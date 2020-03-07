@@ -21,7 +21,8 @@ class ProcessTask(models.Model):
     message_text = fields.Text(string="Message Text")
     variables = fields.Text(string="Process Variables")
     form_variables = fields.Text(string="Task Form Variables")
-
+    state = fields.Selection(string='State', selection=[('draft', 'Draft'), ('completed', 'Completed'),])
+    
     def get_client(self):
         client = Camunda(host="172.18.0.1", port="8080")
         return client
@@ -57,10 +58,10 @@ class ProcessTask(models.Model):
         for key, item in form_variables.items():
             if key in formLabels:
                 item["label"] = formLabels[key]
-                if formTypes[key] == 'string':
-                    item["type"] = 'String'
-                if formTypes[key] == 'long':
-                    item["type"] = 'Integer'
+                if formTypes[key] == "string":
+                    item["type"] = "String"
+                if formTypes[key] == "long":
+                    item["type"] = "Integer"
                 new_form_variables[key] = item
 
         self.form_variables = json.dumps(new_form_variables)
@@ -73,14 +74,16 @@ class ProcessTask(models.Model):
                     {
                         "res_id": self.id,
                         "res_model_id": self.env["ir.model"]._get("process.task").id,
-                        "activity_type_id": self.env.ref("mail.mail_activity_data_todo").id,
+                        "activity_type_id": self.env.ref(
+                            "mail.mail_activity_data_todo"
+                        ).id,
                         "summary": self.message_text,
                         "user_id": user.id,
                     }
                 )
-    
+
     def complete(self):
         self.ensure_one()
         client = self.get_client()
         client.task_complete(self.task_id, json.loads(self.form_variables))
-
+        self.state = "completed"

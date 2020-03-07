@@ -90,8 +90,5 @@ class Camunda:
     def task_complete(self, task_id, variables):
         _logger.info(f"complete task {task_id}")
         data = self.post(
-            f"task/{task_id}/complete",
-            payload=json.dumps(
-                {"variables": variables}
-            ),
+            f"task/{task_id}/complete", payload=json.dumps({"variables": variables}),
         )
