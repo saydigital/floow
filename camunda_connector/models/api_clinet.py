@@ -86,3 +86,12 @@ class Camunda:
         data = self.get(f"process-definition/{id}/form-variables")
         json_data = json.loads(data.text)
         return json_data
+
+    def task_complete(self, task_id, variables):
+        _logger.info(f"complete task {task_id}")
+        data = self.post(
+            f"task/{task_id}/complete",
+            payload=json.dumps(
+                {"variables": variables}
+            ),
+        )

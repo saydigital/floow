@@ -67,12 +67,20 @@ class ProcessTask(models.Model):
 
     def create_activity(self):
         self.ensure_one()
-        self.env["mail.activity"].create(
-            {
-                "res_id": self.id,
-                "res_model_id": self.env["ir.model"]._get("process.task").id,
-                "activity_type_id": self.env.ref("mail.mail_activity_data_todo").id,
-                "summary": self.message_text,
-                "user_id": 6,
-            }
-        )
+        for group in self.groups_ids:
+            for user in group.users:
+                self.env["mail.activity"].create(
+                    {
+                        "res_id": self.id,
+                        "res_model_id": self.env["ir.model"]._get("process.task").id,
+                        "activity_type_id": self.env.ref("mail.mail_activity_data_todo").id,
+                        "summary": self.message_text,
+                        "user_id": user.id,
+                    }
+                )
+    
+    def complete(self):
+        self.ensure_one()
+        client = self.get_client()
+        client.task_complete(self.task_id, json.loads(self.form_variables))
+
