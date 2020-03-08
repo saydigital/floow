@@ -12,7 +12,7 @@
                     <t t-foreach="widget.start_vars" t-as="factor">
                         <label t-attf-for="{{factor}}">
                             <span t-esc="factor" />
-                    : 
+                    :
                         </label>
                         <input type="text" class="start_vars_input" t-attf-name="{{factor}}" t-attf-value="{{widget.start_vars[factor]['label']}}" t-attf-disabled="{{ widget.mode == 'readonly'?true:undefined }}" />
                     </t>
@@ -27,7 +27,7 @@
             <t t-foreach="widget.vars" t-as="factor">
                 <label t-attf-for="{{widget.vars[factor]}}">
                     <span t-esc="widget.vars[factor].label" />
-            : 
+            :
                 </label>
                 <input t-if="widget.vars[factor].type == 'String'" type="text" t-attf-name="{{factor}}" t-attf-value="{{widget.vars[factor].value}}" t-attf-disabled="{{ widget.disabled?true:undefined }}" class="vars_input"/>
                 <input t-if="widget.vars[factor].type == 'Integer'" type="number" t-attf-name="{{factor}}" t-attf-value="{{widget.vars[factor].value}}" t-attf-disabled="{{ widget.disabled?true:undefined }}" class="vars_input"/>

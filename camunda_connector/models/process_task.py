@@ -1,7 +1,8 @@
-from odoo import api, fields, models
-from .api_clinet import Camunda
-
 import json
+
+from odoo import fields, models
+
+from .api_clinet import Camunda
 
 
 class ProcessTask(models.Model):
@@ -21,8 +22,10 @@ class ProcessTask(models.Model):
     message_text = fields.Text(string="Message Text")
     variables = fields.Text(string="Process Variables")
     form_variables = fields.Text(string="Task Form Variables")
-    state = fields.Selection(string='State', selection=[('draft', 'Draft'), ('completed', 'Completed'),])
-    
+    state = fields.Selection(
+        string="State", selection=[("draft", "Draft"), ("completed", "Completed")]
+    )
+
     def get_client(self):
         client = Camunda(host="172.18.0.1", port="8080")
         return client

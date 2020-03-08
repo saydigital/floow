@@ -1,9 +1,9 @@
-from odoo import api, fields, models, _
+import json
+
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 from ..models.api_clinet import Camunda
-
-import json
 
 
 class ModuleName(models.TransientModel):
@@ -26,7 +26,7 @@ class ModuleName(models.TransientModel):
 
     def start(self):
         form_start_variables = json.loads(self.form_start_variables)
-        for key, item in form_start_variables.items():
+        for _key, item in form_start_variables.items():
             if not item["value"]:
                 raise UserError(_("You must enter the value of \n") + item["label"])
         new_id = self.env["process.instance"].create(

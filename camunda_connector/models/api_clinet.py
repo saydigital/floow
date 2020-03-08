@@ -1,6 +1,7 @@
-import requests
 import json
 import logging
+
+import requests
 
 _logger = logging.getLogger(__name__)
 
@@ -22,11 +23,19 @@ class Camunda:
         self.host = host
         self.port = port
 
-    def get(self, endpoint, payload={}, params={}):
+    def get(self, endpoint, payload=None, params=None):
+        if payload is None:
+            payload = {}
+        if params is None:
+            params = {}
         url = f"http://{self.host}:{self.port}/engine-rest/{endpoint}"
         return self.call("get", url, payload=payload, params=params)
 
-    def post(self, endpoint, payload={}, params={}):
+    def post(self, endpoint, payload=None, params=None):
+        if payload is None:
+            payload = {}
+        if params is None:
+            params = {}
         url = f"http://{self.host}:{self.port}/engine-rest/{endpoint}"
         return self.call(
             "POST",
@@ -36,7 +45,13 @@ class Camunda:
             params=params,
         )
 
-    def call(self, method, url, headers={}, payload={}, params={}):
+    def call(self, method, url, headers=None, payload=None, params=None):
+        if headers is None:
+            headers = {}
+        if payload is None:
+            payload = {}
+        if params is None:
+            params = {}
         res = requests.request(
             method=method, headers=headers, url=url, data=payload, params=params
         )
@@ -90,5 +105,6 @@ class Camunda:
     def task_complete(self, task_id, variables):
         _logger.info(f"complete task {task_id}")
         data = self.post(
-            f"task/{task_id}/complete", payload=json.dumps({"variables": variables}),
+            f"task/{task_id}/complete", payload=json.dumps({"variables": variables})
         )
+        return data

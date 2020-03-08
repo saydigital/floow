@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from . import models
 from . import api_clinet
 from . import process_instance

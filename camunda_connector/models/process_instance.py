@@ -1,4 +1,5 @@
-from odoo import api, fields, models, _
+from odoo import _, fields, models
+
 from .api_clinet import Camunda
 
 
@@ -34,7 +35,7 @@ class ProcessInstance(models.Model):
                 group_id = self.env["res.groups"].search([("id", "=", int(prop))])
                 if group_id:
                     groups.append((4, group_id.id))
-            except:
+            except Exception:
                 pass
         return groups
 

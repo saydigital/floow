@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
-
-from odoo import models, fields, api
 import json
+
+from odoo import api, fields, models
+
 from .api_clinet import Camunda
 
 

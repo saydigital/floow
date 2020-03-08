@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     "name": "camunda_connector",
     "summary": """

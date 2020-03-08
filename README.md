@@ -31,10 +31,10 @@ The Manual activities will create a note to the user that have to be complete. F
 	User of Process Case : The user that you insert in your Launch Process Form
 	Dynamic User: User inside a Process Object
 	Process Role: User of a specific role (selected based on a Rule)
-	
+
 #### Automated Activities
 Activities of this type will execute an odoo Server Action
-	
+
 #### Subprocess Activities
 Activities of this type will launch another process
 
@@ -58,7 +58,7 @@ Selecting a process (that have the startable flag, selected) you can chose the a
 
 #### Trigger
 You can create a Automated Action Launch a BPM process . In this automated action you will add also the code (with all the process object inside the context) that will be executed after the launch.
-	
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
@@ -66,4 +66,3 @@ Please make sure to update tests as appropriate.
 
 ### License
 [AGPL3](http://www.gnu.org/licenses/agpl-3.0-standalone.html)
-
