@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<odoo>
+
+	
+	 <record model="ir.ui.view" id="view_note_archive">
+	   <field name="name">note.note.form</field>
+       <field name="model">note.note</field>
+	   <field name="inherit_id" ref="note.view_note_note_form"/>
+	   <field name="arch" type="xml">
+               
+                <xpath  expr="//form/sheet[1]/field[1]" 
+                    position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" confirm="The note will not be visible. Are you sure to Archive this Note? " groups="base.group_user" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{&quot;terminology&quot;: &quot;archive&quot;}"/>
+                        </button>
+                    </div>
+                </xpath>
+                 <xpath  expr="//form/sheet[1]/field[last()]" 
+                    position="after">
+                     <notebook name="noteNB">
+                     
+                     </notebook>
+                </xpath>
+	   </field>
+   </record>
+   
+    <record model="ir.ui.view" id="view_note_archive_search">
+	   <field name="name">note.note.search</field>
+       <field name="model">note.note</field>
+	   <field name="inherit_id" ref="note.view_note_note_filter"/>
+	   <field name="arch" type="xml">
+                <xpath expr="//filter[@name='open_true']" 
+                    position="replace">
+                       <filter name="open_true" string="Not Completed" domain="[('open', '=', True)]"/>
+                    
+                </xpath>
+                <xpath expr="//filter[@name='open_false']" 
+                    position="replace">
+          				<filter name="open_false" string="Completed" domain="[('open', '=', False)]"/>
+                    	<filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                    	
+                </xpath>
+	   </field>
+   </record>
+   
+	
+
+   
+</odoo>

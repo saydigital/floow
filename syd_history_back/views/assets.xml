@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="syd_history_back.assets_backend" name="history back assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/syd_history_back/static/src/js/syd_history_back.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="view_note_archive_1">
+			<field name="name">note.note.form</field>
+			<field name="model">note.note</field>
+			<field name="inherit_id" ref="note.view_note_note_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='memo']" position="replace">
+					<field name="memo" widget="html" class="oe_memo"  />
+				</xpath>
+				<xpath expr="//field[@name='memo']" position="before">
+					<group>
+						<field name="name" required="1" class="oe_inline"
+							string="Nome" />
+						<field name="tag_ids" widget="many2many_tags"
+							placeholder="Tags" options="{'no_create_edit': True}"
+							class="oe_inline" />
+					</group>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

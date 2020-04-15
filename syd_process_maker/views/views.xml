@@ -1,0 +1,51 @@
+<odoo>
+  <data>
+  
+  	<record model="ir.ui.view" id="process_maker_group_form_view">
+      <field name="name">syd_bpm.process_group.form</field>
+      <field name="model">syd_bpm.process_group</field>
+      <field name="inherit_id" ref="syd_bpm.process_group_form_view"/>
+      <field name="arch" type="xml">
+      	<xpath  expr="//div[@name='button_box']" position="inside">
+
+                 		<button attrs="{'invisible':[('type','!=','ProcessMaker2')]}" groups="syd_bpm.group_bpm_manager" class="oe_stat_button" name="update_processes"  type="object" title="Update" icon="fa-refresh"> 
+                        	<field name="last_update" readonly="1"/>
+                        </button>
+                       
+         </xpath>              
+         <xpath  expr="//notebook[@name='parameters']" position="inside">
+					<page attrs="{'invisible':[('type','!=','ProcessMaker2')]}" string="Process Maker parameter" groups="base.group_system">
+		          		 <group groups="base.group_system">
+				          	<field name="pm_url" />
+				            <field name="pm_workspace"/>
+				            <field name="pm_client_id" />
+				            <field name="pm_client_secret" />
+				            <field name="pm_username" />
+				            <field name="pm_password" password="True"/>
+				           
+				            
+		          		</group>
+		          		<group>
+		          			 <field name="pm_user_name" />
+		          		</group>
+		          	</page>
+         </xpath>              
+      </field>
+    </record>
+
+
+    
+   <record model="ir.ui.view" id="process_maker_activity_form_view">
+     <field name="name">syd_bpm.activity.form</field>
+      <field name="model">syd_bpm.activity</field>
+      <field name="inherit_id" ref="syd_bpm.activity_form_view"/>
+      <field name="arch" type="xml">
+         <xpath  expr="//field[@name='process_id']" position="after">
+	            <field name="pm_activity_id"/>
+         </xpath>  
+      </field>
+    </record>
+	
+
+  </data>
+</odoo>

@@ -1,0 +1,25 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_syd_bpm_process,syd_bpm.process,model_syd_bpm_process,group_bpm_manager,1,1,1,1
+access_syd_bpm_process_public,syd_bpm.process public,model_syd_bpm_process,base.group_user,1,0,0,0
+access_syd_bpm_process_group,syd_bpm.process_group,model_syd_bpm_process_group,group_bpm_manager,1,1,1,1
+access_syd_bpm_process_category_public,syd_bpm.process_category public,model_syd_bpm_process_category,base.group_user,1,0,0,0
+access_syd_bpm_process_category_group,syd_bpm.process_category,model_syd_bpm_process_category,group_bpm_manager,1,1,1,1
+access_syd_bpm_activity,syd_bpm.activity,model_syd_bpm_activity,group_bpm_manager,1,1,1,1
+access_syd_bpm_case,syd_bpm.case,model_syd_bpm_case,group_bpm_manager,1,1,1,1
+access_syd_bpm_case_public,syd_bpm.case public,model_syd_bpm_case,base.group_user,1,1,0,0
+access_syd_bpm_task_executed,syd_bpm.task_executed,model_syd_bpm_task_executed,group_bpm_manager,1,1,1,1
+access_syd_bpm_process_object,syd_bpm.process_objec,model_syd_bpm_process_object,group_bpm_manager,1,1,1,1
+access_syd_bpm_case_object,syd_bpm.case_object,model_syd_bpm_case_object,base.group_user,1,1,1,1
+access_syd_bpm_dynamic_form,syd_bpm.dynamic_form,model_syd_bpm_dynamic_form,group_bpm_manager,1,1,1,1
+access_syd_bpm_dynamic_form_public,syd_bpm.dynamic_form,model_syd_bpm_dynamic_form,base.group_user,1,0,0,0
+access_syd_bpm_dynamic_form_line,syd_bpm.dynamic_form_line,model_syd_bpm_dynamic_form_line,group_bpm_manager,1,1,1,1
+access_syd_bpm_dynamic_form_line_public,syd_bpm.dynamic_form_line,model_syd_bpm_dynamic_form_line,base.group_user,1,0,0,0
+access_syd_bpm_process_date_calculated,syd_bpm.process_date_calculated,model_syd_bpm_process_date_calculated,group_bpm_manager,1,1,1,1
+access_syd_bpm_process_priority_public,syd_bpm.process_priority,model_syd_bpm_process_priority,base.group_user,1,0,0,0
+access_syd_bpm_process_priority,syd_bpm.process_priority,model_syd_bpm_process_priority,group_bpm_manager,1,1,1,1
+access_syd_bpm_process_role_user,syd_bpm.process_role_user,model_syd_bpm_process_role_user,group_bpm_manager,1,1,1,1
+access_syd_bpm_process_role,syd_bpm.process_role,model_syd_bpm_process_role,group_bpm_manager,1,1,1,1
+access_syd_bpm_process_role_activity,syd_bpm.process_role_activity,model_syd_bpm_process_role_activity,group_bpm_manager,1,1,1,1
+
+
+

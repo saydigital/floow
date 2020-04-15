@@ -1,0 +1,36 @@
+<odoo>
+  <data>
+  	
+  	
+  	
+  	<record id="process_start_view" model="ir.ui.view">
+            <field name="name">syd_bpm.process_start.form</field>
+            <field name="model">syd_bpm.process_start</field>
+            <field name="arch" type="xml">
+                <form string="Process Start">
+                    <p class="oe_grey">
+                        Set information related to this case.
+                    </p>
+                    <group>
+	                    <field name="name" />
+	                </group>
+                    <group>
+	                    
+	                    <field name="user_id" />
+	                </group>
+                    <group>
+                    	<field name="detail" />
+                    </group>
+                    
+                    <footer>
+                        <button string="Confirm" name="start_process" type="object" default_focus="1" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        
+  </data>
+ 
+</odoo>

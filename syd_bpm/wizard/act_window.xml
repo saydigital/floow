@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--  <act_window id="action_process_start"
+        	binding_model="syd_bpm.process"
+        	res_model="syd_bpm.process_start"
+        	binding_views="list"
+        	view_mode="form"
+        	target="new"
+   /> -->
+   <act_window id="action_process_start"
+        name="Process Start"
+        binding_model="syd_bpm.process"
+        res_model="syd_bpm.process_start"
+        binding_views="list"
+        view_mode="form"
+        target="new"
+        context="{
+            'default_composition_mode': 'mass',
+            'default_mass_keep_log': True,
+            'default_res_ids': active_ids
+        }"
+    />
+            
+</odoo>

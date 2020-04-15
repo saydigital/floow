@@ -1,0 +1,36 @@
+<openerp>
+  <data>
+ 
+
+    <!-- Top menu item -->
+    <menuitem name="B.P.M." id="syd_bpm_menu_root" groups="group_bpm_manager" web_icon="syd_bpm,static/description/icon.png"/>
+     
+    <menuitem name="Business Process Management" parent="syd_bpm_menu_root" id="syd_bpm_menu_root_inside" sequence="3"/>
+    <menuitem name="Process Groups" parent="syd_bpm_menu_root" id="syd_bpm_menu_process_groups" sequence="1" action="process_group_act"/>
+    
+    
+   	<menuitem name="Processes" parent="syd_bpm_menu_root" id="syd_bpm_menu_processes" sequence="2"/>
+   	<menuitem name="Processes" parent="syd_bpm_menu_processes" id="syd_bpm_sub_menu_processes" sequence="1" action="process_act"/>
+   	<menuitem name="Cases" parent="syd_bpm_menu_processes" id="syd_bpm_menu_cases" sequence="2" action="case_todo_act_I"/>
+    <menuitem name="Activity" parent="syd_bpm_menu_processes" id="syd_bpm_menu_activity_variables" sequence="1" action="activity_act"/>
+    
+    <menuitem name="Triggers" parent="syd_bpm_menu_root" id="syd_bpm_menu_triggers" sequence="3"/>
+    <menuitem name="Process" parent="syd_bpm_menu_triggers" id="syd_bpm_menu_process_triggers" sequence="1" action="process_trigger_act"/>
+    <menuitem name="Activity" parent="syd_bpm_menu_triggers" id="syd_bpm_menu_activity_triggers" sequence="2" action="activity_trigger_act"/>
+    
+    <menuitem name="Reports" parent="syd_bpm_menu_root" id="syd_bpm_menu_reports" sequence="4"/>
+    <menuitem name="Tasks" parent="syd_bpm_menu_reports" id="syd_bpm_menu_tasks_report" sequence="1" action="tasks_report_act"/>
+    
+    <menuitem name="Configuration" parent="syd_bpm_menu_root" id="syd_bpm_menu_conf" sequence="5"/>
+    <menuitem name="Process Objects" parent="syd_bpm_menu_conf" id="syd_bpm_menu_process_objects" sequence="2" action="process_object_act"/>
+    <menuitem name="Process Roles" parent="syd_bpm_menu_conf" id="syd_bpm_menu_process_roles" sequence="3" action="process_role_act"/>
+   	<menuitem name="Process Categories" parent="syd_bpm_menu_conf" id="syd_bpm_menu_process_categories" sequence="7" action="process_category_act"/>
+   	
+   <menuitem id="management_dynamic_form" name="Dynamic forms"	parent="syd_bpm.syd_bpm_menu_conf" sequence="4" action="dyanmic_form_action" />
+      <menuitem id="date_calculated" name="Date Calculated"	parent="syd_bpm.syd_bpm_menu_conf" sequence="5" action="process_date_calculated_act" />
+         <menuitem id="process_priority" name="Process Priority"	parent="syd_bpm.syd_bpm_menu_conf" sequence="6" action="process_priority_act" />
+   
+   <menuitem id="menu_bpm_config" name="Settings" parent="syd_bpm_menu_conf"
+            sequence="0" action="action_bpm_config" groups="base.group_system"/>
+   </data>
+</openerp>

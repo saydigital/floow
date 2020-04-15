@@ -1,0 +1,75 @@
+<odoo>
+	<data>
+
+
+		<record model="ir.ui.view" id="create_dynamyc_wizard_tree">
+			<field name="name">Dynamic Wizard tree</field>
+			<field name="model">syd_dynamic_wizard.wizard.config</field>
+			<field name="priority" eval="16" />
+			<field name="arch" type="xml">
+				<tree string="Creare wizard dinamico">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="create_dynamyc_wizard_form" model="ir.ui.view">
+			<field name="name">Dynamic Wizard form</field>
+			<field name="model">syd_dynamic_wizard.wizard.config</field>
+			<field name="arch" type="xml">
+				<form string="Dynamic Wizard">
+					<header>
+						<button string="Crea Model" type="object"
+							name="model_create" class="oe_inline oe_stat_button" />
+						<button string="Avvia Model" type="object"
+							name="start_model_created" class="oe_inline oe_stat_button" />
+						<button string="Cancella Model" type="object"
+							name="delete_model_created" class="oe_inline oe_stat_button" />
+					</header>
+					<sheet>
+						<group>
+							<field name="name" required="1" />
+							<field name="description" />
+							<field name="note" />
+							<field name="model_id" readonly="1"/>
+							<field name="view_id" readonly="1"/>
+						</group>
+						<notebook>
+							<page string="Fields">
+								<field name="wizard_config_line_ids">
+									<tree string="Campi" editable="bottom">
+										<field name="wizard_config_id" invisible="1" />
+										<field name="id" invisible="1" />
+										<field name="name" required="1" />
+										<field name="type_field" required="1" />
+										<field name="help" />
+										<field name="model_id" 
+											attrs="{'readonly':[('type_field','not in',['many2many','many2one','one2many'])]}" />
+										<field name="field_relation"
+											attrs="{'readonly':[('type_field','=','one2many')]}" />
+										<field name="choices"
+											attrs="{'readonly':[('type_field','!=','selection')]}"
+											context="{'default_wizard_config_line_id':id}" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+
+		<record model="ir.actions.act_window"
+			id="create_wizard_dynamic">
+			<field name="name">Creare wizard dinamico</field>
+			<field name="res_model">syd_dynamic_wizard.wizard.config</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+
+		<menuitem id="wizard_config" name="Wizard Config"
+			parent="base.menu_custom" action="create_wizard_dynamic" />
+
+	</data>
+</odoo>

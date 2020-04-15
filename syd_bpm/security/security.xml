@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+    <record model="ir.module.category" id="module_category_bpm">
+            <field name="name">Business Process Manager</field>
+            <field name="description">Business Process Manager</field>
+            <field name="sequence">60</field>
+    </record>
+    
+    
+    <record id="group_bpm_manager" model="res.groups">
+        <field name="name">BPM Manager</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="category_id" ref="module_category_bpm"/>
+    </record>
+    
+    <record id="base.user_admin" model="res.users">
+        <field name="groups_id" eval="[(4, ref('syd_bpm.group_bpm_manager'))]"/>
+    </record>
+    
+     <record model="ir.rule" id="process_all_rule">
+        <field name="name">Gli utenti possono vedere i processi a cui sono autorizzati</field>
+        <field name="model_id" ref="model_syd_bpm_process"/>
+        <field name="domain_force">
+          [('message_partner_ids', 'in', [user.partner_id.id])]
+        </field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+		<field eval="True" name="perm_read"/>
+    </record>
+    
+    
+    <record model="ir.rule" id="process_bpm_manager_rule">
+        <field name="name">Gli utenti bpm manager possono vedere tutti i processi</field>
+        <field name="model_id" ref="model_syd_bpm_process"/>
+        <field name="groups" eval="[(4, ref('syd_bpm.group_bpm_manager'))]"/>
+		<field eval="True" name="perm_read"/>
+		<field eval="True" name="perm_write"/>
+		<field eval="True" name="perm_unlink"/>
+		<field eval="True" name="perm_create"/>
+    </record>
+    
+    
+    <record model="ir.rule" id="case_all_rule">
+        <field name="name">Gli utenti possono vedere i casi dei processi a cui sono autorizzati</field>
+        <field name="model_id" ref="model_syd_bpm_case"/>
+        <field name="domain_force">
+          [('process_id.message_partner_ids', 'in', [user.partner_id.id])]
+        </field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+		<field eval="True" name="perm_read"/>
+    </record>
+    
+     
+    
+    
+    <record model="ir.rule" id="case_bpm_manager_rule">
+        <field name="name">Gli utenti bpm manager possono vedere tutti i casi</field>
+        <field name="model_id" ref="model_syd_bpm_case"/>
+        <field name="groups" eval="[(4, ref('syd_bpm.group_bpm_manager'))]"/>
+		<field eval="True" name="perm_read"/>
+		<field eval="True" name="perm_write"/>
+		<field eval="True" name="perm_unlink"/>
+		<field eval="True" name="perm_create"/>
+    </record>
+    
+</data>
+<data noupdate="1">
+    <record id="base.default_user" model="res.users">
+        <field name="groups_id" eval="[(4,ref('syd_bpm.group_bpm_manager'))]"/>
+    </record>
+</data>
+</odoo>

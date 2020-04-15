@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- add js and css (for widget) -->
+        <template id="assets_backend" name="syd_bpmnjs assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="https://unpkg.com/bpmn-js@5.1.1/dist/assets/diagram-js.css" />
+                <link rel="stylesheet" href="https://unpkg.com/bpmn-js@5.1.1/dist/assets/bpmn-font/css/bpmn.css" />
+                <link rel="stylesheet" href="/syd_bpmnjs/static/src/css/style.css" />
+                <script type="text/javascript" src="/syd_bpmnjs/static/src/js/bpmn-modeler.development.js"/>
+                <script type="text/javascript" src="/syd_bpmnjs/static/src/js/bpmn_widget.js"/>
+                <script type="text/javascript" src="/syd_bpmnjs/static/src/js/script.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

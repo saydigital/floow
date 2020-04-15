@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates id="template" xml:space="preserve">
+
+
+    <t t-name="syd_bpmnjs.bpmn_temp">
+        <t t-set="placeholder" t-value="widget.getParent().node and widget.getParent().node.attrs.placeholder"/>
+        <t t-set="outerbpmnID" t-value="_.uniqueId('outerbpmnID')"/>
+        <t t-set="bpmnID" t-value="_.uniqueId('bpmn_temp')"/>
+        <t t-set="save_bpmn" t-value="_.uniqueId('save_bpmn')"/>
+        <t t-set="close_bpmn" t-value="_.uniqueId('close_bpmn')"/>
+        <div class="o_bpmn" aria-atomic="true" t-att-id="bpmnID">
+            <button class="save_bpmn" t-att-id="save_bpmn">save</button>
+            <button class="close_bpmn" t-att-id="close_bpmn">close</button>
+        </div>
+    </t>
+
+</templates>

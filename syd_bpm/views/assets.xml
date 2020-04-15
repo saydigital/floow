@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="syd_bpm.assets_backend" name="bpm custom assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/syd_bpm/static/src/js/bpm_graph_view.js"/>
+                <script type="text/javascript" src="/syd_bpm/static/src/js/bpm_pivot_view.js"/>
+                <script type="text/javascript" src="/syd_bpm/static/src/js/bpm_view_registry.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
