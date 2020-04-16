@@ -372,7 +372,7 @@
 	
 	
 	 <!-- New note Kanban View -->
-    <record id="view_note_note_kanban_inherit" model="ir.ui.view">
+   <!--  <record id="view_note_note_kanban_inherit" model="ir.ui.view">
       <field name="name">note.note.kanban</field>
       <field name="model">note.note</field>
       <field name="inherit_id" ref="note.view_note_note_kanban"/>
@@ -423,9 +423,9 @@
                     </a>
                   </span>
                   
-<!--                 kanban note -->
+                kanban note
                 <span t-attf-class="oe_kanban_content #{record.open.raw_value ? '' : 'note_text_line_through'}">
-<!--                   title -->
+                  title
                   <field name="name"/>
                 </span>
                 
@@ -457,9 +457,9 @@
                     </a>
                   </span>
                   
-<!--                 kanban note -->
+                kanban note
                 <span t-attf-class="oe_kanban_content #{record.open.raw_value ? '' : 'note_text_line_through'}">
-<!--                   title -->
+                  title
                   <field name="name"/>
                 </span>
                 
@@ -477,7 +477,7 @@
         </kanban>
         </xpath>
       </field>
-    </record>
+    </record> -->
 	
 	<record model="ir.ui.view" id="view_note_bpm">
 	   <field name="name">note.note.form</field>

@@ -31,9 +31,12 @@ class Note(models.Model):
     
     def _dynamic_form(self):
         for n in self:
+            dynamic_form_id = False
             for t in n.sudo().task_executed_ids:
                 for a in t.activity_id:
-                    n.dynamic_form_id = a.sudo().dynamic_form_id.id
+                    dynamic_form_id = a.sudo().dynamic_form_id.id
+            n.dynamic_form_id = dynamic_form_id
+            
     
     def form_save(self,form):
         """ 
