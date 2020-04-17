@@ -12,9 +12,7 @@
 					<group>
 						<field name="name" required="1" class="oe_inline"
 							string="Nome" />
-						<field name="tag_ids" widget="many2many_tags"
-							placeholder="Tags" options="{'no_create_edit': True}"
-							class="oe_inline" />
+						
 					</group>
 				</xpath>
 			</field>
