@@ -109,14 +109,10 @@ class WizardConfig(models.Model):
                            'required':ele.required,
                            'selectable':True,
                            'store':True,
-                           'wizard_config_id':self.id,
                            'index':False,#gestire il caso
-                           'copy':False,#gestire il caso
                            'related':False,#gestire il caso
                            'readonly':False,#gestire il caso
                            'translate':False,#gestire il caso
-                           'serialization_field_id':False,#gestire il caso
-                           'relationm_table':'',#gestire il caso
                            'column1':'',#gestire il caso
                            'column2':'',#gestire il caso
                            'domain': ele.domain,
