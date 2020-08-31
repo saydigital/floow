@@ -21,7 +21,7 @@
 
 
     'category': 'project',
-    'version': '1.0',
+    'version': '1.0.0.1',
 
     # any module necessary for this one to work correctly
     'depends': ['syd_bpm'],

@@ -57,8 +57,8 @@ class ProcessGroup(BPMInterface,models.Model):
             endresult = requests.post(self.pm_url+'/api/1.0/'+self.pm_workspace+'/'+request,data =jsonobject ,headers=headers)
         if (method == 'PUT'):
             endresult = requests.put(self.pm_url+'/api/1.0/'+self.pm_workspace+'/'+request,data =jsonobject ,headers=headers)
-        if (not bool(endresult) or not endresult.ok) :
-             raise  Exception(str(endresult.status_code)+"-" + str(endresult.content))
+        if (not bool(endresult) or not endresult.ok):
+            raise  Exception(str(endresult.status_code)+"-" + str(endresult.content))
         if bool(endresult.content): 
             if 'json' in endresult.headers['Content-Type']:
                 return json.loads(endresult.content) 
