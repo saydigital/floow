@@ -1,5 +1,6 @@
 [<img src="https://img.shields.io/badge/licence-AGPL--3-blue.png">](http://www.gnu.org/licenses/agpl-3.0-standalone.html)
 
+> :warning: repository name has been changed from **odoo_bpm** to **floow**. Please update your git remotes accordingly.
 
 # Business Process Management odoo app
 
